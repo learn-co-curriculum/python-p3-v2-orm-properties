@@ -2,7 +2,6 @@
 from __init__ import CURSOR, CONN
 from department import Department
 
-
 class Employee:
 
     # Dictionary of objects saved to the database.
@@ -19,6 +18,44 @@ class Employee:
             f"<Employee {self.id}: {self.name}, {self.job_title}, " +
             f"Department ID: {self.department_id}>"
         )
+
+    @property
+    def name(self):
+        return self._name
+
+    @name.setter
+    def name(self, name):
+        if isinstance(name, str) and len(name):
+            self._name = name
+        else:
+            raise ValueError(
+                "Name must be a non-empty string"
+            )
+
+    @property
+    def job_title(self):
+        return self._job_title
+
+    @job_title.setter
+    def job_title(self, job_title):
+        if isinstance(job_title, str) and len(job_title):
+            self._job_title = job_title
+        else:
+            raise ValueError(
+                "job_title must be a non-empty string"
+            )
+
+    @property
+    def department_id(self):
+        return self._department_id
+
+    @department_id.setter
+    def department_id(self, department_id):
+        if Department.find_by_id(department_id):
+            self._department_id = department_id
+        else:
+            raise ValueError(
+                "department_id must reference a department in the database")
 
     @classmethod
     def create_table(cls):
